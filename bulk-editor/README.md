@@ -1,6 +1,6 @@
 # Bulk Editor DatoCMS plugin
 
-This plugin can be added to all kinds of filter belonging to a non-singleton model. It allows you to apply a value to all records belonging to the same model.
+This plugin can be added to all kinds of field belonging to a non-singleton model. It allows you to apply a value to all records belonging to the same model. Something like a 'it's never too late' default value.
 
 ## Configuration
 

@@ -1,6 +1,6 @@
 # Sidebar Button DatoCMS plugin
 
-Shows button
+Creates a sidebar button that allows a user to make a POST request to a custom url containing the record id as body.
 
 ## Configuration
 
@@ -26,7 +26,7 @@ Start the local development server with:
 yarn start
 ```
 
-The plugin will be served from [https://datocms-plugin-sidebar-button.localtunnel.me/](https://datocms-plugin-sidebar-button.localtunnel.me/). Insert this URL as the plugin [Entry point URL](https://www.datocms.com/docs/plugins/creating-a-new-plugin/).
+The plugin will be served from [https://datocms-plugin-send-record-id.localtunnel.me/](https://datocms-plugin-send-record-id.localtunnel.me/). Insert this URL as the plugin [Entry point URL](https://www.datocms.com/docs/plugins/creating-a-new-plugin/).
 
 ```
 yarn publish
