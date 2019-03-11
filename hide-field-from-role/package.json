@@ -56,14 +56,22 @@
       "links"
     ],
     "parameters": {
-      "global": [],
+      "global": [
+        {
+          "id": "apiToken",
+          "label": "Dato API token",
+          "type": "string",
+          "required": true,
+          "hint": "Full access API token"
+        }
+      ],
       "instance": [
         {
-          "id": "role",
-          "label": "Roles",
-          "type": "boolean",
+          "id": "roles",
+          "label": "Roles that should not see this field",
+          "type": "string",
           "required": true,
-          "hint": "Insert the roles that should not see this field (comma separated)"
+          "hint": "These roles will not be able to see this field (comma separated)"
         }
       ]
     }
@@ -97,6 +105,6 @@
     "yo": "^2.0.5"
   },
   "dependencies": {
-
+    "datocms-client": "^0.8.15"
   }
 }
