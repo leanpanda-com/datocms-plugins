@@ -50,7 +50,10 @@
       "string",
       "text",
       "json",
-      "color"
+      "color",
+      "video",
+      "lat_lon",
+      "links"
     ],
     "parameters": {
       "global": [
