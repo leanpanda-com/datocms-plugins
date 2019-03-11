@@ -1,13 +1,13 @@
 {
-  "name": "datocms-plugin-hidden-field",
-  "homepage": "https://github.com/pandadevs/plugins/datocms-plugin-hidden-field",
+  "name": "datocms-plugin-co-working",
+  "homepage": "https://github.com/pandadevs/plugins/datocms-plugin-co-working",
   "version": "0.0.1",
   "description": "This plugin prevent certain roles to see a field",
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"yarn dev\" \"yarn localtunnel\"",
-    "localtunnel": "lt -s datocms-plugin-hidden-field --port 5000",
-    "dev": "NODE_ENV=development webpack-dev-server --port 5000",
+    "localtunnel": "lt -s datocms-plugin-co-working --port 6000",
+    "dev": "NODE_ENV=development webpack-dev-server --port 6000",
     "dist": "NODE_ENV=production webpack --progress",
     "prepublishOnly": "rimraf lib dist && mkdir dist && npm run dist",
     "addToProject": "yo datocms-plugin:add-to-project",
@@ -16,7 +16,7 @@
   "keywords": [
     "datocms",
     "datocms-plugin",
-    "field-addon",
+    "sidebar",
     "boolean-field",
     "date-field",
     "date-time-field",
@@ -25,9 +25,7 @@
     "string-field",
     "text-field",
     "json-field",
-    "color-field",
-    "fold-as-you-like",
-    "hide-field"
+    "color-field"
   ],
   "files": [
     "dist",
@@ -36,11 +34,11 @@
   "author": "Lean Panda <info@leanpanda.com>",
   "license": "ISC",
   "datoCmsPlugin": {
-    "title": "Hidden Field",
+    "title": "Co Working",
     "previewImage": "docs/preview.gif",
     "coverImage": "docs/cover.png",
     "entryPoint": "dist/index.html",
-    "pluginType": "field_addon",
+    "pluginType": "sidebar",
     "fieldTypes": [
       "boolean",
       "date",
@@ -65,15 +63,7 @@
           "hint": "Full access API token"
         }
       ],
-      "instance": [
-        {
-          "id": "roles",
-          "label": "Roles that should not see this field",
-          "type": "string",
-          "required": true,
-          "hint": "These roles will not be able to see this field (comma separated)"
-        }
-      ]
+      "instance": []
     }
   },
   "devDependencies": {
