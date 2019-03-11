@@ -14,7 +14,7 @@ module.exports = {
   devServer: {
     contentBase: './',
     disableHostCheck: true,
-    public: 'https://datocms-plugin-co-working.localtunnel.me',
+    public: 'http://localhost:5000',
   },
   module: {
     rules: [
