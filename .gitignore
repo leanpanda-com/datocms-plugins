@@ -3,3 +3,4 @@ dist
 .DS_Store
 co-working
 hidden-field
+hide-field-from-role
