@@ -2,7 +2,7 @@
   "name": "datocms-plugin-alt-title-editor",
   "homepage": "https://github.com/cantierecreativo/datocms-plugin-alt-title-editor",
   "version": "0.0.1",
-  "description": "This plugin can be added to all kinds of field belonging to a non-singleton model. It allows you to apply a value to all records belonging to the same model. Something like a 'it's never too late' default value.",
+  "description": "This plugin allows the editor to speed up editing images' titles and alts in a record. Install it on a JSON field and you will see two inputs, one for alt and one for title. By clicking on 'Apply' it applies the values to all images in the same record. To see the results you should refresh the page. If you have more than one locale you should enable the localization for the field on which the plugin is installed to be able to edit each locale independently.",
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"yarn dev\" \"yarn localtunnel\"",
@@ -17,7 +17,10 @@
     "datocms",
     "datocms-plugin",
     "field-editor",
-    "json-field"
+    "json-field",
+    "images",
+    "alt",
+    "title"
   ],
   "files": [
     "dist",
@@ -26,7 +29,7 @@
   "author": "Cantiere Creativo <info@cantierecreativo.net>",
   "license": "ISC",
   "datoCmsPlugin": {
-    "title": "Bulk Editor",
+    "title": "Alt & title quick Editor",
     "previewImage": "docs/preview.gif",
     "coverImage": "docs/cover.png",
     "entryPoint": "dist/index.html",
