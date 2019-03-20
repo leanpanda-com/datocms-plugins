@@ -1,10 +1,12 @@
 # Hidden Field DatoCMS plugin
 
-f
+This is the simplest field editor ever, it just hides the input from the DatoCMS UI!
+
+Suppose you are storing some data to DatoCMS through the API, it makes no sense to let this data editable by editors, right? So, just hide it!
 
 ## Configuration
 
-[Describe/screenshot any global/instance parameters this plugin requires]
+No needs for configuration, just add this plugin to any field type and none will be able to see it.
 
 ## Development
 
@@ -27,17 +29,3 @@ yarn start
 ```
 
 The plugin will be served from [https://datocms-plugin-hidden-field.localtunnel.me/](https://datocms-plugin-hidden-field.localtunnel.me/). Insert this URL as the plugin [Entry point URL](https://www.datocms.com/docs/plugins/creating-a-new-plugin/).
-
-## Publishing
-
-Before publishing this plugin, make sure:
-
-* you've properly described any configuration parameters in this README file;
-* you've properly compiled this project's `package.json` following the [official rules](https://www.datocms.com/docs/plugins/publishing/);
-* you've added a cover image (`cover.png`) and a preview GIF (`preview.gif`) into the `docs` folder.
-
-When everything's ready, just run:
-
-```
-yarn publish
-```
