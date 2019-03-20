@@ -91,7 +91,6 @@ window.DatoCmsPlugin.init((plugin) => {
   container.appendChild(button);
 
   button.addEventListener('click', (event) => {
-    if (!event.target.matches('#DatoCMS-button--primary')) return;
     event.preventDefault();
 
     /* eslint-disable */

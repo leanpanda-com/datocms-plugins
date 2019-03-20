@@ -7,6 +7,14 @@ window.DatoCmsPlugin.init((plugin) => {
   plugin.startAutoResizer();
   const { field, locale, fieldPath } = plugin;
 
+  if (plugin.itemType.attributes.singleton) {
+    throw new Error('Bulk editor plugin: This model is singleton');
+  }
+  
+  if (field.attributes.validators.unique) {
+    throw new Error('Bulk editor plugin: This field has an unique value constraint');
+  }
+
   const container = document.createElement('div');
   container.classList.add('container');
   const button = document.createElement('button');
@@ -23,20 +31,16 @@ window.DatoCmsPlugin.init((plugin) => {
     version: 'current',
   };
 
-  console.log(plugin.itemType);
-
   button.addEventListener('click', (event) => {
-    if (!event.target.matches('#DatoCMS-button--primary')) return;
     event.preventDefault();
 
     /* eslint-disable */
     const confirm = window.confirm(`This action will overwrite all previous content for the "${field.attributes.label}" field belonging to all records of the ${plugin.itemType.attributes.name} model. Are you sure you want to proceed?`);
     /* eslint-enable */
+
     if (!confirm) {
       return;
     }
-    if (plugin.itemType.singleton) throw new Error('This model is singleton');
-    if (field.attributes.validators.unique) throw new Error('This field has an unique value constraint');
     button.disabled = true;
     button.classList.remove('done');
     button.classList.add('loading');
