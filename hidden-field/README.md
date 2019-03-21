@@ -1,9 +1,13 @@
 # Hidden Field DatoCMS plugin
 
-This is the simplest field editor ever, it just hides the input from the DatoCMS UI!
+This is the simplest field editor ever,
+it just hides the input from the DatoCMS UI!
 
-Suppose you are storing some data in DatoCMS through the API, it makes no sense to let this data editable by editors, right? So, just hide it!
+Suppose you are storing some data in DatoCMS through the API,
+it makes no sense to make this data editable by editors, right?
+So, just hide it!
 
 ## Configuration
 
-No needs for configuration, just add this plugin to any field type and none will be able to see it.
+No need for configuration, just add this plugin to any field type
+and no-one will be able to see it.
