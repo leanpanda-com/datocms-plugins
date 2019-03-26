@@ -5,6 +5,7 @@ const mockUpdate = jest.fn(() => null);
 
 const pluginMock = (options = {}) => {
   const singleton = 'singleton' in options ? options.singleton : false
+  const unique = 'unique' in options ? options.unique : false
 
   return {
     parameters: {
@@ -23,7 +24,7 @@ const pluginMock = (options = {}) => {
       attributes: {
         api_key: 'title',
         validators: {
-          unique: false
+          unique
         }
       }
     }
@@ -67,4 +68,11 @@ it('fails for singletons', () => {
 
   expect(() => bulkEdit(plugin, document, fakeWindow)).
     toThrow(/model is singleton/)
+})
+
+it('fails for unique values', () => {
+  const plugin = pluginMock({unique: true})
+
+  expect(() => bulkEdit(plugin, document, fakeWindow)).
+    toThrow(/unique value constraint/)
 })
