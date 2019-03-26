@@ -1,4 +1,6 @@
 import bulkEdit from './bulkEdit';
+import flushPromises from './test/support/flushPromises'
+
 const mockUpdate = jest.fn(() => null);
 
 jest.mock('datocms-client', () => ({
@@ -6,18 +8,14 @@ jest.mock('datocms-client', () => ({
   SiteClient: class MockFakeDato {
     constructor() {
       this.items = {
-        all: jest.fn(res => ({
-          then: () => ({
-            id: "12",
-          }),
-        })),
+        all: jest.fn(res => Promise.resolve([{id: 12}])),
         update: mockUpdate
       };
     }
   },
 }));
 
-it('updates fields', () => {
+it('updates fields', async () => {
   const plugin = {
     parameters: {
       global: {
@@ -51,5 +49,6 @@ it('updates fields', () => {
   const button = document.getElementById('DatoCMS-button--primary');
   button.click();
 
+  await flushPromises()
   expect(mockUpdate.mock.calls.length).toBe(1);
 });
