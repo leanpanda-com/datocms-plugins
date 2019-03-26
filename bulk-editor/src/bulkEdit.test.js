@@ -66,6 +66,14 @@ describe('bulkEdit', () => {
     document.getElementsByTagName('html')[0].innerHTML = ''
   })
 
+  it('starts the auto resizer', () => {
+    const plugin = mockPluginFactory()
+
+    bulkEdit(plugin, document, mockWindowFactory());
+
+    expect(plugin.startAutoResizer.mock.calls.length).toBe(1)
+  })
+
   it('updates fields', async () => {
     mockUpdate.mockReset()
 
