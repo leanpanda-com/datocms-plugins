@@ -3,7 +3,6 @@ import './style/style.sass';
 import './style/button.sass';
 
 const bulkEdit = (plugin, document, window) => {
-  console.log(SiteClient);
   const dato = new SiteClient(plugin.parameters.global.apikey);
   plugin.startAutoResizer();
   const { field, locale, fieldPath } = plugin;

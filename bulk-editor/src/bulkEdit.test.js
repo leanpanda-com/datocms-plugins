@@ -3,20 +3,8 @@ import flushPromises from './test/support/flushPromises'
 
 const mockUpdate = jest.fn(() => null);
 
-jest.mock('datocms-client', () => ({
-  __esModule: true,
-  SiteClient: class MockFakeDato {
-    constructor() {
-      this.items = {
-        all: jest.fn(res => Promise.resolve([{id: 12}])),
-        update: mockUpdate
-      };
-    }
-  },
-}));
-
-it('updates fields', async () => {
-  const plugin = {
+const pluginMock = () => (
+  {
     parameters: {
       global: {
         api_key: "ciao"
@@ -36,14 +24,33 @@ it('updates fields', async () => {
           unique: false
         }
       }
-    },
-  };
+    }
+  }
+)
 
+const fakeWindow = {
+  confirm: jest.fn(() => true),
+  alert: jest.fn(() => true)
+};
 
-  const fakeWindow = {
-    confirm: jest.fn(() => true),
-    alert: jest.fn(() => true)
-  };
+jest.mock('datocms-client', () => ({
+  __esModule: true,
+  SiteClient: class SiteClient {
+    constructor() {
+    this.items = {
+      all: jest.fn(() => Promise.resolve([
+        {
+          id: "12",
+        }
+      ])),
+      update: mockUpdate
+    };
+    }
+  }
+}))
+
+it('updates fields', async () => {
+  const plugin = pluginMock()
 
   bulkEdit(plugin, document, fakeWindow);
   const button = document.getElementById('DatoCMS-button--primary');
