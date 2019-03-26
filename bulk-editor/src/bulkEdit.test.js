@@ -3,9 +3,8 @@ import flushPromises from './test/support/flushPromises'
 
 const mockUpdate = jest.fn(() => null);
 
-const pluginMock = (options = {}) => {
-  const singleton = 'singleton' in options ? options.singleton : false
-  const unique = 'unique' in options ? options.unique : false
+const mockPluginFactory = (options = {}) => {
+  const opts = Object.assign({singleton: false, unique: false}, options)
 
   return {
     parameters: {
@@ -17,62 +16,86 @@ const pluginMock = (options = {}) => {
     getFieldValue: jest.fn(() => 'value'),
     itemType: {
       attributes: {
-        singleton
+        singleton: opts.singleton
       }
     },
     field: {
       attributes: {
         api_key: 'title',
+        label: 'title',
         validators: {
-          unique
+          unique: opts.unique
         }
       }
     }
   }
 }
 
-const fakeWindow = {
-  confirm: jest.fn(() => true),
-  alert: jest.fn(() => true)
-};
+const mockWindowFactory = (options = {}) => {
+  const opts = Object.assign({confirm: true}, options)
+
+  return {
+    confirm: () => opts.confirm,
+    alert: () => true
+  }
+}
 
 jest.mock('datocms-client', () => ({
   __esModule: true,
   SiteClient: class SiteClient {
     constructor() {
-    this.items = {
-      all: jest.fn(() => Promise.resolve([
-        {
-          id: "12",
-        }
-      ])),
-      update: mockUpdate
-    };
+      this.items = {
+        all: jest.fn(() => Promise.resolve([
+          {id: "12"}
+        ])),
+        update: mockUpdate
+      };
     }
   }
 }))
 
-it('updates fields', async () => {
-  const plugin = pluginMock()
+describe('bulkEdit', () => {
+  afterEach(() => {
+    document.getElementsByTagName('html')[0].innerHTML = ''
+  })
 
-  bulkEdit(plugin, document, fakeWindow);
-  const button = document.getElementById('DatoCMS-button--primary');
-  button.click();
+  it('updates fields', async () => {
+    mockUpdate.mockReset()
 
-  await flushPromises()
-  expect(mockUpdate.mock.calls.length).toBe(1);
-});
+    const plugin = mockPluginFactory()
+    plugin.foo = 'updates'
 
-it('fails for singletons', () => {
-  const plugin = pluginMock({singleton: true})
+    bulkEdit(plugin, document, mockWindowFactory());
+    const button = document.getElementById('DatoCMS-button--primary');
+    button.click();
 
-  expect(() => bulkEdit(plugin, document, fakeWindow)).
-    toThrow(/model is singleton/)
-})
+    await flushPromises()
+    expect(mockUpdate.mock.calls.length).toBe(1)
+  });
 
-it('fails for unique values', () => {
-  const plugin = pluginMock({unique: true})
+  it('fails for singletons', () => {
+    const plugin = mockPluginFactory({singleton: true})
 
-  expect(() => bulkEdit(plugin, document, fakeWindow)).
-    toThrow(/unique value constraint/)
+    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
+      toThrow(/model is singleton/)
+  })
+
+  it('fails for unique values', () => {
+    const plugin = mockPluginFactory({unique: true})
+
+    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
+      toThrow(/unique value constraint/)
+  })
+
+  it('skips without confirmation', async () => {
+    mockUpdate.mockReset()
+    const mockWindow = mockWindowFactory({confirm: false})
+
+    bulkEdit(mockPluginFactory(), document, mockWindow)
+    const button = document.getElementById('DatoCMS-button--primary')
+    button.click()
+
+    await flushPromises()
+    expect(mockUpdate.mock.calls.length).toBe(0)
+  })
 })

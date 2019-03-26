@@ -71,7 +71,6 @@ const bulkEdit = (plugin, document, window) => {
         button.classList.add('done');
       })
       .catch((error) => {
-        console.log('error', error);
         button.disabled = false;
         button.classList.remove('loading');
         button.classList.add('error');
