@@ -4,7 +4,12 @@ import flushPromises from './test/support/flushPromises'
 const mockUpdate = jest.fn(() => null);
 
 const mockPluginFactory = (options = {}) => {
-  const opts = Object.assign({singleton: false, unique: false}, options)
+  const defaults = {
+    localized: false,
+    singleton: false,
+    unique: false
+  }
+  const opts = Object.assign(defaults, options)
 
   return {
     parameters: {
@@ -23,11 +28,13 @@ const mockPluginFactory = (options = {}) => {
       attributes: {
         api_key: 'title',
         label: 'title',
+        localized: opts.localized,
         validators: {
           unique: opts.unique
         }
       }
-    }
+    },
+    locale: opts.locale
   }
 }
 
@@ -63,7 +70,6 @@ describe('bulkEdit', () => {
     mockUpdate.mockReset()
 
     const plugin = mockPluginFactory()
-    plugin.foo = 'updates'
 
     bulkEdit(plugin, document, mockWindowFactory());
     const button = document.getElementById('DatoCMS-button--primary');
@@ -71,6 +77,21 @@ describe('bulkEdit', () => {
 
     await flushPromises()
     expect(mockUpdate.mock.calls.length).toBe(1)
+  });
+
+  it('updates localized fields', async () => {
+    mockUpdate.mockReset()
+
+    const plugin = mockPluginFactory({localized: true, locale: "fr"})
+
+    bulkEdit(plugin, document, mockWindowFactory());
+    const button = document.getElementById('DatoCMS-button--primary');
+    button.click();
+
+    await flushPromises()
+    const call = mockUpdate.mock.calls[0]
+    const update = call[1]['title']['fr']
+    expect(update).toBe('value')
   });
 
   it('fails for singletons', () => {
@@ -85,6 +106,13 @@ describe('bulkEdit', () => {
 
     expect(() => bulkEdit(plugin, document, mockWindowFactory())).
       toThrow(/unique value constraint/)
+  })
+
+  it('fails for localized fields without a locale', () => {
+    const plugin = mockPluginFactory({localized: true})
+
+    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
+      toThrow(/Set the locale/)
   })
 
   it('skips without confirmation', async () => {

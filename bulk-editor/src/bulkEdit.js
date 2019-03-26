@@ -15,6 +15,10 @@ const bulkEdit = (plugin, document, window) => {
     throw new Error('Bulk editor plugin: This field has an unique value constraint');
   }
 
+  if (field.attributes.localized && !locale) {
+    throw new Error('Bulk editor plugin: Set the locale for localized fields');
+  }
+
   const container = document.createElement('div');
   container.classList.add('container');
   const button = document.createElement('button');
