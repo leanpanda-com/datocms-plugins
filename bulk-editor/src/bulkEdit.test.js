@@ -3,8 +3,10 @@ import flushPromises from './test/support/flushPromises'
 
 const mockUpdate = jest.fn(() => null);
 
-const pluginMock = () => (
-  {
+const pluginMock = (options = {}) => {
+  const singleton = 'singleton' in options ? options.singleton : false
+
+  return {
     parameters: {
       global: {
         api_key: "ciao"
@@ -14,7 +16,7 @@ const pluginMock = () => (
     getFieldValue: jest.fn(() => 'value'),
     itemType: {
       attributes: {
-        singleton: false
+        singleton
       }
     },
     field: {
@@ -26,7 +28,7 @@ const pluginMock = () => (
       }
     }
   }
-)
+}
 
 const fakeWindow = {
   confirm: jest.fn(() => true),
@@ -59,3 +61,10 @@ it('updates fields', async () => {
   await flushPromises()
   expect(mockUpdate.mock.calls.length).toBe(1);
 });
+
+it('fails for singletons', () => {
+  const plugin = pluginMock({singleton: true})
+
+  expect(() => bulkEdit(plugin, document, fakeWindow)).
+    toThrow(/model is singleton/)
+})
