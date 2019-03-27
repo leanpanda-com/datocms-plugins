@@ -9,7 +9,8 @@
     "localtunnel": "lt -s datocms-plugin-bulk-editor --port 5000",
     "dev": "NODE_ENV=development webpack-dev-server --port 5000",
     "dist": "NODE_ENV=production webpack --progress",
-    "lint": "eslint src",
+    "lint:dev": "eslint -c .eslintrc-dev src",
+    "lint:prod": "eslint src",
     "prepublishOnly": "rimraf lib dist && mkdir dist && npm run dist",
     "addToProject": "yo datocms-plugin:add-to-project",
     "test": "jest"
