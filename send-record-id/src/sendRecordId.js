@@ -24,7 +24,6 @@ const callUrl = (url, headers, body) => {
       e.response.json().then((response) => {
         statement.textContent = `${e.status} - ${e.response.statusText}`;
         statement.textContent += `- ${response.message}`;
-        throw new Error(`${e.status} - ${e.response.statusText} - ${response.message}`);
       });
     });
 };
