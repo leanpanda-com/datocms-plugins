@@ -1,12 +1,8 @@
-const mockItemsAll = jest.fn()
-const mockItemsUpdate = jest.fn()
+const items = {}
 
 class MockSiteClient {
   constructor() {
-    this.items = {
-      all: mockItemsAll,
-      update: mockItemsUpdate
-    }
+    this.items = items
   }
 }
 
@@ -14,4 +10,4 @@ const SiteClient = jest.fn()
 
 SiteClient.mockImplementation(() => new MockSiteClient)
 
-export {SiteClient, mockItemsAll, mockItemsUpdate}
+export {SiteClient, items}

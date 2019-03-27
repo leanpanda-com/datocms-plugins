@@ -1,6 +1,6 @@
 import bulkEdit from './bulkEdit';
 import flushPromises from './test/support/flushPromises'
-import {SiteClient, mockItemsAll, mockItemsUpdate} from 'datocms-client'
+import {SiteClient, items} from 'datocms-client'
 jest.mock('datocms-client')
 
 const mockPluginFactory = (options = {}) => {
@@ -51,9 +51,8 @@ const mockWindowFactory = (options = {}) => {
 
 describe('bulkEdit', () => {
   beforeEach(() => {
-    mockItemsAll.mockReset()
-    mockItemsAll.mockImplementation(() => Promise.resolve([{id: "12"}]))
-    mockItemsUpdate.mockReset()
+    items.all = jest.fn(() => Promise.resolve([{id: "12"}]))
+    items.update = jest.fn()
   })
 
   afterEach(() => {
@@ -74,7 +73,7 @@ describe('bulkEdit', () => {
     button.click();
 
     await flushPromises()
-    expect(mockItemsUpdate.mock.calls.length).toBe(1)
+    expect(items.update.mock.calls.length).toBe(1)
   });
 
   it('updates localized fields', async () => {
@@ -85,7 +84,7 @@ describe('bulkEdit', () => {
     button.click();
 
     await flushPromises()
-    const call = mockItemsUpdate.mock.calls[0]
+    const call = items.update.mock.calls[0]
     const update = call[1]['title']['fr']
     expect(update).toBe('value')
   });
@@ -119,13 +118,13 @@ describe('bulkEdit', () => {
     button.click()
 
     await flushPromises()
-    expect(mockItemsUpdate.mock.calls.length).toBe(0)
+    expect(items.update.mock.calls.length).toBe(0)
   })
 
   it('when the .all call fails, it shows an alert', async () => {
     const mockWindow = mockWindowFactory()
 
-    mockItemsAll.mockImplementation(() => Promise.reject('FAIL'))
+    items.all = jest.fn(() => Promise.reject('FAIL'))
 
     bulkEdit(mockPluginFactory(), document, mockWindow);
     const button = document.getElementById('DatoCMS-button--primary');
