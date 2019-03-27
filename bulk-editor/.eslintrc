@@ -1,9 +1,9 @@
 {
   parser: "babel-eslint",
-  extends: "airbnb-base",
+  extends: "airbnb",
   env: {
     es6: true,
-    mocha: true,
+    jest: true,
     browser: true
   },
   parserOptions: {
@@ -13,6 +13,19 @@
     "import/resolver": "webpack"
   },
   rules: {
-    "no-console": 0
+    "arrow-body-style": ["warn", "as-needed"],
+    "arrow-parens": ["error", "as-needed"],
+    "comma-dangle": ["error", "only-multiline"],
+    "max-len": ["error", {"code": 80}],
+    "no-unused-vars": ["error", {"argsIgnorePattern": "^_"}],
+    "object-curly-spacing": ["warn", "never"],
+    "object-curly-newline": ["error", {
+      "ObjectExpression": {"multiline": true},
+      "ObjectPattern": {"multiline": true}
+    }],
+    "quotes": ["error", "single"],
+    "react/jsx-filename-extension": "off",
+    "react/jsx-tag-spacing": "off",
+    "semi": ["warn", "never"]
   }
 }

@@ -1,6 +1,8 @@
+import {items} from 'datocms-client'
+
 import bulkEdit from './bulkEdit';
 import flushPromises from './test/support/flushPromises'
-import {SiteClient, items} from 'datocms-client'
+
 jest.mock('datocms-client')
 
 const mockPluginFactory = (options = {}) => {
@@ -13,26 +15,16 @@ const mockPluginFactory = (options = {}) => {
   const opts = Object.assign(defaults, options)
 
   return {
-    parameters: {
-      global: {
-        api_key: "ciao"
-      }
-    },
+    parameters: {global: {api_key: 'ciao'}},
     startAutoResizer: jest.fn(() => null),
     getFieldValue: jest.fn(() => 'value'),
-    itemType: {
-      attributes: {
-        singleton: opts.singleton
-      }
-    },
+    itemType: {attributes: {singleton: opts.singleton}},
     field: {
       attributes: {
         api_key: 'title',
         label: 'title',
         localized: opts.localized,
-        validators: {
-          unique: opts.unique
-        }
+        validators: {unique: opts.unique}
       }
     },
     fieldPath: opts.fieldPath,
@@ -51,7 +43,7 @@ const mockWindowFactory = (options = {}) => {
 
 describe('bulkEdit', () => {
   beforeEach(() => {
-    items.all = jest.fn(() => Promise.resolve([{id: "12"}]))
+    items.all = jest.fn(() => Promise.resolve([{id: '12'}]))
     items.update = jest.fn()
   })
 
@@ -77,7 +69,7 @@ describe('bulkEdit', () => {
   });
 
   it('updates localized fields', async () => {
-    const plugin = mockPluginFactory({localized: true, locale: "fr"})
+    const plugin = mockPluginFactory({localized: true, locale: 'fr'})
 
     bulkEdit(plugin, document, mockWindowFactory());
     const button = document.getElementById('DatoCMS-button--primary');
@@ -85,29 +77,29 @@ describe('bulkEdit', () => {
 
     await flushPromises()
     const call = items.update.mock.calls[0]
-    const update = call[1]['title']['fr']
+    const update = call[1].title.fr
     expect(update).toBe('value')
   });
 
   it('fails for singletons', () => {
     const plugin = mockPluginFactory({singleton: true})
 
-    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
-      toThrow(/model is singleton/)
+    expect(() => bulkEdit(plugin, document, mockWindowFactory()))
+      .toThrow(/model is singleton/)
   })
 
   it('fails for unique values', () => {
     const plugin = mockPluginFactory({unique: true})
 
-    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
-      toThrow(/unique value constraint/)
+    expect(() => bulkEdit(plugin, document, mockWindowFactory()))
+      .toThrow(/unique value constraint/)
   })
 
   it('fails for localized fields without a locale', () => {
     const plugin = mockPluginFactory({localized: true})
 
-    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
-      toThrow(/Set the locale/)
+    expect(() => bulkEdit(plugin, document, mockWindowFactory()))
+      .toThrow(/Set the locale/)
   })
 
   it('skips without confirmation', async () => {
@@ -124,7 +116,7 @@ describe('bulkEdit', () => {
   it('when the .all call fails, it shows an alert', async () => {
     const mockWindow = mockWindowFactory()
 
-    items.all = jest.fn(() => Promise.reject('FAIL'))
+    items.all = jest.fn(() => Promise.reject(new Error('FAIL')))
 
     bulkEdit(mockPluginFactory(), document, mockWindow);
     const button = document.getElementById('DatoCMS-button--primary');
