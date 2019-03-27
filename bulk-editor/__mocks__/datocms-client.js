@@ -6,8 +6,6 @@ class MockSiteClient {
   }
 }
 
-const SiteClient = jest.fn()
-
-SiteClient.mockImplementation(() => new MockSiteClient)
+const SiteClient = jest.fn(() => new MockSiteClient)
 
 export {SiteClient, items}
