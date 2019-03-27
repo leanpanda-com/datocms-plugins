@@ -44,8 +44,8 @@ const mockWindowFactory = (options = {}) => {
   const opts = Object.assign({confirm: true}, options)
 
   return {
-    confirm: () => opts.confirm,
-    alert: () => true
+    confirm: jest.fn(() => opts.confirm),
+    alert: jest.fn(() => true)
   }
 }
 
@@ -119,6 +119,19 @@ describe('bulkEdit', () => {
     button.click()
 
     await flushPromises()
-    expect(mockUpdate.mock.calls.length).toBe(0)
+    expect(mockItemsUpdate.mock.calls.length).toBe(0)
+  })
+
+  it('when the .all call fails, it shows an alert', async () => {
+    const mockWindow = mockWindowFactory()
+
+    mockItemsAll.mockImplementation(() => Promise.reject('FAIL'))
+
+    bulkEdit(mockPluginFactory(), document, mockWindow);
+    const button = document.getElementById('DatoCMS-button--primary');
+    button.click();
+
+    await flushPromises()
+    expect(mockWindow.alert.mock.calls.length).toBe(1)
   })
 })
