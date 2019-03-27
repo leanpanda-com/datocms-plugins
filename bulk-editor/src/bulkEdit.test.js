@@ -1,7 +1,7 @@
 import bulkEdit from './bulkEdit';
 import flushPromises from './test/support/flushPromises'
-
-const mockUpdate = jest.fn(() => null);
+import {SiteClient, mockItemsAll, mockItemsUpdate} from 'datocms-client'
+jest.mock('datocms-client')
 
 const mockPluginFactory = (options = {}) => {
   const defaults = {
@@ -49,21 +49,13 @@ const mockWindowFactory = (options = {}) => {
   }
 }
 
-jest.mock('datocms-client', () => ({
-  __esModule: true,
-  SiteClient: class SiteClient {
-    constructor() {
-      this.items = {
-        all: jest.fn(() => Promise.resolve([
-          {id: "12"}
-        ])),
-        update: mockUpdate
-      };
-    }
-  }
-}))
-
 describe('bulkEdit', () => {
+  beforeEach(() => {
+    mockItemsAll.mockReset()
+    mockItemsAll.mockImplementation(() => Promise.resolve([{id: "12"}]))
+    mockItemsUpdate.mockReset()
+  })
+
   afterEach(() => {
     document.getElementsByTagName('html')[0].innerHTML = ''
   })
@@ -77,21 +69,15 @@ describe('bulkEdit', () => {
   })
 
   it('updates fields', async () => {
-    mockUpdate.mockReset()
-
-    const plugin = mockPluginFactory()
-
-    bulkEdit(plugin, document, mockWindowFactory());
+    bulkEdit(mockPluginFactory(), document, mockWindowFactory());
     const button = document.getElementById('DatoCMS-button--primary');
     button.click();
 
     await flushPromises()
-    expect(mockUpdate.mock.calls.length).toBe(1)
+    expect(mockItemsUpdate.mock.calls.length).toBe(1)
   });
 
   it('updates localized fields', async () => {
-    mockUpdate.mockReset()
-
     const plugin = mockPluginFactory({localized: true, locale: "fr"})
 
     bulkEdit(plugin, document, mockWindowFactory());
@@ -99,7 +85,7 @@ describe('bulkEdit', () => {
     button.click();
 
     await flushPromises()
-    const call = mockUpdate.mock.calls[0]
+    const call = mockItemsUpdate.mock.calls[0]
     const update = call[1]['title']['fr']
     expect(update).toBe('value')
   });
@@ -126,7 +112,6 @@ describe('bulkEdit', () => {
   })
 
   it('skips without confirmation', async () => {
-    mockUpdate.mockReset()
     const mockWindow = mockWindowFactory({confirm: false})
 
     bulkEdit(mockPluginFactory(), document, mockWindow)
