@@ -1,6 +1,6 @@
 import {items} from 'datocms-client'
 
-import bulkEdit from './bulkEdit';
+import bulkEdit from './bulkEdit'
 import flushPromises from './test/support/flushPromises'
 
 jest.mock('datocms-client')
@@ -54,32 +54,32 @@ describe('bulkEdit', () => {
   it('starts the auto resizer', () => {
     const plugin = mockPluginFactory()
 
-    bulkEdit(plugin, document, mockWindowFactory());
+    bulkEdit(plugin, document, mockWindowFactory())
 
     expect(plugin.startAutoResizer).toHaveBeenCalledTimes(1)
   })
 
   it('updates fields', async () => {
-    bulkEdit(mockPluginFactory(), document, mockWindowFactory());
-    const button = document.getElementById('DatoCMS-button--primary');
-    button.click();
+    bulkEdit(mockPluginFactory(), document, mockWindowFactory())
+    const button = document.getElementById('DatoCMS-button--primary')
+    button.click()
 
     await flushPromises()
     expect(items.update).toHaveBeenCalledTimes(1)
-  });
+  })
 
   it('updates localized fields', async () => {
     const plugin = mockPluginFactory({localized: true, locale: 'fr'})
 
-    bulkEdit(plugin, document, mockWindowFactory());
-    const button = document.getElementById('DatoCMS-button--primary');
-    button.click();
+    bulkEdit(plugin, document, mockWindowFactory())
+    const button = document.getElementById('DatoCMS-button--primary')
+    button.click()
 
     await flushPromises()
     const call = items.update.mock.calls[0]
     const update = call[1].title.fr
     expect(update).toBe('value')
-  });
+  })
 
   it('fails for singletons', () => {
     const plugin = mockPluginFactory({singleton: true})
@@ -118,9 +118,9 @@ describe('bulkEdit', () => {
 
     items.all = jest.fn(() => Promise.reject(new Error('FAIL')))
 
-    bulkEdit(mockPluginFactory(), document, mockWindow);
-    const button = document.getElementById('DatoCMS-button--primary');
-    button.click();
+    bulkEdit(mockPluginFactory(), document, mockWindow)
+    const button = document.getElementById('DatoCMS-button--primary')
+    button.click()
 
     await flushPromises()
     expect(mockWindow.alert).toHaveBeenCalledTimes(1)
