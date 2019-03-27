@@ -1,5 +1,3 @@
-import bulkEdit from './bulkEdit';
+import bulkEdit from './bulkEdit'
 
-window.DatoCmsPlugin.init((plugin) => {
-  bulkEdit(plugin, document, window);
-});
+window.DatoCmsPlugin.init(plugin => bulkEdit(plugin, document, window))

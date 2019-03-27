@@ -12,7 +12,10 @@ const bulkEdit = (plugin, document, window) => {
   }
 
   if (field.attributes.validators.unique) {
-    throw new Error('Bulk editor plugin: This field has an unique value constraint');
+    throw new Error(
+      'Bulk editor plugin: '
+        + 'This field has an unique value constraint'
+    );
   }
 
   if (field.attributes.localized && !locale) {
@@ -25,7 +28,8 @@ const bulkEdit = (plugin, document, window) => {
   const spinner = document.createElement('span');
 
   button.id = ('DatoCMS-button--primary');
-  button.textContent = `Apply to all ${field.attributes.localized ? `(${locale})` : ''}`;
+  const qualifier = field.attributes.localized ? `(${locale})` : ''
+  button.textContent = `Apply to all ${qualifier}`;
   button.appendChild(spinner);
   spinner.id = ('spinner');
   container.appendChild(button);
@@ -35,7 +39,7 @@ const bulkEdit = (plugin, document, window) => {
     version: 'current',
   };
 
-  button.addEventListener('click', (event) => {
+  button.addEventListener('click', event => {
     event.preventDefault();
 
     /* eslint-disable */
@@ -50,21 +54,20 @@ const bulkEdit = (plugin, document, window) => {
     button.classList.add('loading');
 
     dato.items.all(query, { allPages: true })
-      .then((items) => {
-        items.forEach((item) => {
+      .then(items => {
+        items.forEach(item => {
           let updatedContent = {};
 
+          const key = field.attributes.api_key
           if (field.attributes.localized) {
             updatedContent = {
-              [field.attributes.api_key]: {
+              [key]: {
                 ...item[field.attributes.api_key],
                 [locale]: plugin.getFieldValue(fieldPath),
               },
             };
           } else {
-            updatedContent = {
-              [field.attributes.api_key]: plugin.getFieldValue(fieldPath),
-            };
+            updatedContent = {[key]: plugin.getFieldValue(fieldPath)}
           }
           dato.items.update(item.id, updatedContent);
         });
@@ -74,13 +77,11 @@ const bulkEdit = (plugin, document, window) => {
         button.classList.remove('loading');
         button.classList.add('done');
       })
-      .catch((error) => {
+      .catch(error => {
         button.disabled = false;
         button.classList.remove('loading');
         button.classList.add('error');
-        /* eslint-disable */
         window.alert(error);
-        /* eslint-enable */
       });
   }, false);
 
