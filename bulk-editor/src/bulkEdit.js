@@ -19,10 +19,6 @@ const bulkEdit = (plugin, document, window) => {
     throw new Error('Bulk editor plugin: Set the locale for localized fields');
   }
 
-  if (!fieldPath) {
-    throw new Error('Bulk editor plugin: Set the fieldPath');
-  }
-
   const container = document.createElement('div');
   container.classList.add('container');
   const button = document.createElement('button');

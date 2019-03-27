@@ -125,13 +125,6 @@ describe('bulkEdit', () => {
       toThrow(/Set the locale/)
   })
 
-  it('fails without a field path', () => {
-    const plugin = mockPluginFactory({fieldPath: undefined})
-
-    expect(() => bulkEdit(plugin, document, mockWindowFactory())).
-      toThrow(/Set the fieldPath/)
-  })
-
   it('skips without confirmation', async () => {
     mockUpdate.mockReset()
     const mockWindow = mockWindowFactory({confirm: false})
