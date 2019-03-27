@@ -64,7 +64,7 @@ describe('bulkEdit', () => {
 
     bulkEdit(plugin, document, mockWindowFactory());
 
-    expect(plugin.startAutoResizer.mock.calls.length).toBe(1)
+    expect(plugin.startAutoResizer).toHaveBeenCalledTimes(1)
   })
 
   it('updates fields', async () => {
@@ -73,7 +73,7 @@ describe('bulkEdit', () => {
     button.click();
 
     await flushPromises()
-    expect(items.update.mock.calls.length).toBe(1)
+    expect(items.update).toHaveBeenCalledTimes(1)
   });
 
   it('updates localized fields', async () => {
@@ -118,7 +118,7 @@ describe('bulkEdit', () => {
     button.click()
 
     await flushPromises()
-    expect(items.update.mock.calls.length).toBe(0)
+    expect(items.update).toHaveBeenCalledTimes(0)
   })
 
   it('when the .all call fails, it shows an alert', async () => {
@@ -131,6 +131,6 @@ describe('bulkEdit', () => {
     button.click();
 
     await flushPromises()
-    expect(mockWindow.alert.mock.calls.length).toBe(1)
+    expect(mockWindow.alert).toHaveBeenCalledTimes(1)
   })
 })
