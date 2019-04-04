@@ -2,31 +2,44 @@ import './style/style.sass'
 import './style/button.sass'
 import {SiteClient} from 'datocms-client'
 
-const editImages = (plugin, button, document) => {
-  const dato = new SiteClient(plugin.parameters.global.apiToken)
-  const altValue = document.getElementById('alt').value
-  const titleValue = document.getElementById('title').value
+Object.defineProperty(Array.prototype, 'flat', {
+  value: function(depth = 1) {
+    return this.reduce(function (flat, toFlatten) {
+      return flat.concat((Array.isArray(toFlatten) && (depth>1)) ? toFlatten.flat(depth-1) : toFlatten);
+    }, []);
+  }
+});
 
-  const imageFieldsIds = Object.values(plugin.fields)
+const editImages = (plugin, button, document) => {
+  const newData = plugin.getFieldValue(plugin.fieldPath)
+  const dato = new SiteClient(plugin.parameters.global.apiToken)
+  const altValue = newData.alt
+  const titleValue = newData.title
+
+  const imageFieldsApiKeys = Object.values(plugin.fields)
     .filter(f => ['file', 'gallery'].includes(f.attributes.field_type)
       && f.relationships.item_type.data.id === plugin.itemType.id)
     .map(field => field.attributes.api_key)
 
-  dato.item.find(plugin.itemId, {version: 'current'})
-    .then(item => {
-      const uploadIds = imageFieldsIds.map(imageFieldValue => {
-        if (typeof item[imageFieldValue] === 'object') {
-          return item[imageFieldValue][plugin.locale]
-        }
 
-        return item[imageFieldValue]
+  dato.items.find(plugin.itemId, {version: 'current'})
+    .then(item => {
+      const uploadIds = imageFieldsApiKeys.map(imageFieldValue => {
+        const uploadData = item[imageFieldValue]
+        if (
+          typeof uploadData === 'string' ||
+          uploadData instanceof Array
+        ) {
+          return uploadData
+        }
+        return uploadData[plugin.locale]
       }).flat()
 
       uploadIds.forEach(id => {
-        dato.upload.find(id)
+        dato.uploads.find(id)
           .then(u => {
             if (u.isImage) {
-              dato.upload.update(id, {
+              dato.uploads.update(id, {
                 alt: altValue,
                 title: titleValue,
               })
