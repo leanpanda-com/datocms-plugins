@@ -1,5 +1,5 @@
-import sendRecordId from './sendRecordId';
+import sendRecordId from './sendRecordId'
 
-window.DatoCmsPlugin.init((plugin) => {
-  sendRecordId(plugin, document, window);
-});
+window.DatoCmsPlugin.init(plugin => {
+  sendRecordId(plugin, document)
+})

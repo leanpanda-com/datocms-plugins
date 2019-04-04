@@ -1,5 +1,3 @@
-const flushPromises = () => {
-  return new Promise(resolve => setImmediate(resolve))
-}
+const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
 export default flushPromises
