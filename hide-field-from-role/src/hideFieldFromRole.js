@@ -1,7 +1,7 @@
-import { SiteClient } from 'datocms-client'
+import {SiteClient} from 'datocms-client'
 
 const toggleField = (roleName, plugin) => {
-  const roles =  plugin.parameters.instance.roles
+  const {roles} = plugin.parameters.instance
   const hideFromRoles = roles.split(',').map(r => r.toLowerCase())
 
   if (!hideFromRoles.includes(roleName.toLowerCase())) {
@@ -18,7 +18,7 @@ const toggleField = (roleName, plugin) => {
   plugin.toggleField(path, false)
 }
 
-const hideFieldFromRole = (plugin, document, window) => {
+const hideFieldFromRole = plugin => {
   plugin.startAutoResizer()
   const dato = new SiteClient(plugin.parameters.global.apiToken)
   dato.roles.find(plugin.currentUser.relationships.role.data.id)
