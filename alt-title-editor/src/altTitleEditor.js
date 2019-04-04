@@ -3,14 +3,12 @@ import './style/button.sass'
 import {SiteClient} from 'datocms-client'
 
 Object.defineProperty(Array.prototype, 'flat', {
-  value: function(depth = 1) {
-    return this.reduce(function (flat, toFlatten) {
-      return flat.concat((Array.isArray(toFlatten) && (depth>1)) ? toFlatten.flat(depth-1) : toFlatten);
-    }, []);
+  value(depth = 1) {
+    return this.reduce((flat, toFlatten) => flat.concat((Array.isArray(toFlatten) && (depth > 1)) ? toFlatten.flat(depth - 1) : toFlatten), [])
   }
-});
+})
 
-const editImages = (plugin, button, document) => {
+const editImages = (plugin, button) => {
   const newData = plugin.getFieldValue(plugin.fieldPath)
   const dato = new SiteClient(plugin.parameters.global.apiToken)
   const altValue = newData.alt
@@ -27,8 +25,8 @@ const editImages = (plugin, button, document) => {
       const uploadIds = imageFieldsApiKeys.map(imageFieldValue => {
         const uploadData = item[imageFieldValue]
         if (
-          typeof uploadData === 'string' ||
-          uploadData instanceof Array
+          typeof uploadData === 'string'
+          || uploadData instanceof Array
         ) {
           return uploadData
         }
@@ -72,7 +70,13 @@ const altTitleEditor = (plugin, document, window) => {
   container.classList.add('container')
 
   const hint = document.createElement('p')
-  hint.innerHTML = `By clicking on Apply you will edit all alts and titles of images in this record. Refresh to see the updates${site.attributes.locales.length > 1 ? `. This action will only affect only the "${locale}" locale, localize this field to be able to edit also other locales` : '.'}`
+
+  /* eslint-disable */
+  const hintMsg = site.attributes.locales.length > 1 ?
+    `. This action will only affect only the "${locale}" locale, localize this field to be able to edit also other locales` : '.'
+  hint.innerHTML = `By clicking on Apply you will edit all alts and titles of images in this record. Refresh to see the updates${hintMsg}`
+  /* eslint-enable */
+
   hint.classList.add('hint')
   container.appendChild(hint)
 
@@ -98,7 +102,8 @@ const altTitleEditor = (plugin, document, window) => {
   const spinner = document.createElement('span')
 
   button.id = ('DatoCMS-button--primary')
-  button.textContent = `Apply (${site.attributes.locales.length > 1 ? `${locale})` : ''}`
+  const buttonText = site.attributes.locales.length > 1 ? `(${locale})` : ''
+  button.textContent = `Apply ${buttonText}`
   button.appendChild(spinner)
   spinner.id = ('spinner')
   container.appendChild(button)
@@ -116,7 +121,7 @@ const altTitleEditor = (plugin, document, window) => {
     button.disabled = true
     button.classList.remove('done')
     button.classList.add('loading')
-    editImages(plugin, button, document)
+    editImages(plugin, button)
   }, false)
 
   document.body.appendChild(container)

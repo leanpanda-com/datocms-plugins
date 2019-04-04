@@ -28,9 +28,7 @@ const mockPluginFactory = (options = {}) => {
 const mockWindowFactory = (options = {}) => {
   const opts = Object.assign({confirm: true}, options)
 
-  return {
-    confirm: jest.fn(() => opts.confirm)
-  }
+  return {confirm: jest.fn(() => opts.confirm)}
 }
 
 describe('altTitleEditor', () => {
@@ -46,19 +44,19 @@ describe('altTitleEditor', () => {
     expect(plugin.startAutoResizer).toHaveBeenCalledTimes(1)
   })
 
-  describe('when item is not localized and has a cover image and a gallery', () => {
+  describe('when item is not localized, has an image and a gallery', () => {
     beforeAll(() => {
-      items.find = jest.fn((id) => Promise.resolve({
-        id: id,
+      items.find = jest.fn(id => Promise.resolve({
+        id,
         cover: '890',
         gallery: ['123', '456']
       }))
-      uploads.find = jest.fn((id) => Promise.resolve({
-        id: id,
+      uploads.find = jest.fn(id => Promise.resolve({
+        id,
         isImage: true,
       }))
       uploads.update = jest.fn((id, {alt, title}) => Promise.resolve({
-        id: id,
+        id,
         alt,
         title,
       }))
@@ -86,13 +84,7 @@ describe('altTitleEditor', () => {
               label: 'Cover',
               localized: false,
             },
-            relationships: {
-              item_type: {
-                data: {
-                  id: '42'
-                }
-              }
-            }
+            relationships: {item_type: {data: {id: '42'}}}
           },
           {
             attributes: {
@@ -101,13 +93,7 @@ describe('altTitleEditor', () => {
               label: 'Gallery',
               localized: false,
             },
-            relationships: {
-              item_type: {
-                data: {
-                  id: '42'
-                }
-              }
-            }
+            relationships: {item_type: {data: {id: '42'}}}
           }
         ]
       }
@@ -122,16 +108,16 @@ describe('altTitleEditor', () => {
 
   describe('when the image field is localized', () => {
     beforeAll(() => {
-      items.find = jest.fn((id) => Promise.resolve({
-        id: id,
+      items.find = jest.fn(id => Promise.resolve({
+        id,
         cover: {it: '890', en: '450'},
       }))
-      uploads.find = jest.fn((id) => Promise.resolve({
-        id: id,
+      uploads.find = jest.fn(id => Promise.resolve({
+        id,
         isImage: true,
       }))
       uploads.update = jest.fn((id, {alt, title}) => Promise.resolve({
-        id: id,
+        id,
         alt,
         title,
       }))
@@ -150,17 +136,12 @@ describe('altTitleEditor', () => {
               label: 'Cover',
               localized: true,
             },
-            relationships: {
-              item_type: {
-                data: {
-                  id: '42'
-                }
-              }
-            }
+            relationships: {item_type: {data: {id: '42'}}}
           }
         ]
       }
-      altTitleEditor(mockPluginFactory(localizedField), document, mockWindowFactory())
+      const plugin = mockPluginFactory(localizedField)
+      altTitleEditor(plugin, document, mockWindowFactory())
       const button = document.getElementById('DatoCMS-button--primary')
       button.click()
       await flushPromises()
