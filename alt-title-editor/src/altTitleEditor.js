@@ -73,11 +73,16 @@ const altTitleEditor = (plugin, document, window) => {
 
   const hint = document.createElement('p')
 
-  /* eslint-disable */
-  const hintMsg = site.attributes.locales.length > 1 ?
-    `. This action will only affect only the "${locale}" locale, localize this field to be able to edit also other locales` : '.'
-  hint.innerHTML = `By clicking on Apply you will edit all alts and titles of images in this record. Refresh to see the updates${hintMsg}`
-  /* eslint-enable */
+  let hintMsg
+
+  if (site.attributes.locales.length > 1) {
+    hintMsg = ` This action will only affect only the "${locale}" locale, `
+      + 'localize this field to be able to edit also other locales'
+  } else {
+    hintMsg = ''
+  }
+  hint.innerHTML = 'By clicking on Apply you will edit all alts and titles '
+    + `of images in this record. Refresh to see the updates${hintMsg}`
 
   hint.classList.add('hint')
   container.appendChild(hint)
@@ -113,9 +118,11 @@ const altTitleEditor = (plugin, document, window) => {
   button.addEventListener('click', event => {
     event.preventDefault()
 
-    /* eslint-disable */
-    const confirm = window.confirm(`This action will overwrite all titles and alts belonging to images of this record. Are you sure you want to proceed?`)
-    /* eslint-enable */
+    const confirm = window.confirm(
+      'This action will overwrite all titles and alts '
+        + 'belonging to images of this record. '
+        + 'Are you sure you want to proceed?'
+    )
     if (!confirm) {
       return
     }
