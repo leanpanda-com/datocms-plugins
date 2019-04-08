@@ -2,11 +2,13 @@ import './style/style.sass'
 import './style/button.sass'
 import {SiteClient} from 'datocms-client'
 
+/* eslint-disable */
 Object.defineProperty(Array.prototype, 'flat', {
   value(depth = 1) {
     return this.reduce((flat, toFlatten) => flat.concat((Array.isArray(toFlatten) && (depth > 1)) ? toFlatten.flat(depth - 1) : toFlatten), [])
   }
 })
+/* eslint-enable */
 
 const editImages = (plugin, button) => {
   const newData = plugin.getFieldValue(plugin.fieldPath)
