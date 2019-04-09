@@ -44,7 +44,9 @@ describe('sendRecordId', () => {
       expect(call[1].body).toBe(JSON.stringify({id: '123'}))
       expect(button.classList.contains('loading')).toBe(false)
       expect(fetch(call[0], call[1].body)).resolves.toEqual({status: 200})
+      /* eslint-disable */
       const msg = 'Request made to http://test.com with body {"id":"123"} - success!'
+      /* eslint-enable */
       expect(statement.textContent).toBe(msg)
     })
   })
@@ -56,7 +58,7 @@ describe('sendRecordId', () => {
       button.click()
       expect(button.classList.contains('loading')).toBe(true)
       await flushPromises()
-      const statement = document.getElementById('statement')
+      // const statement = document.getElementById('statement')
       expect(fetch('invalid.url')).rejects.toEqual({status: 500})
       // expect(statement.textContent).toBe('500');
       expect(button.classList.contains('loading')).toBe(false)
