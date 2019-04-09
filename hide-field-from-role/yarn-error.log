@@ -24,7 +24,7 @@ Trace:
 npm manifest: 
   {
     "name": "datocms-plugin-hide-field-from-role",
-    "homepage": "https://github.com/pandadevs/plugins/datocms-plugin-hide-field-from-role",
+    "homepage": "https://github.com/leanpanda-com/datocms-plugins/datocms-plugin-hide-field-from-role",
     "version": "0.0.1",
     "description": "This plugin prevent certain roles to see a field",
     "main": "index.js",
