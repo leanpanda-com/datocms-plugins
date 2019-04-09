@@ -1,7 +1,7 @@
 {
   "name": "datocms-plugin-send-record-id",
   "homepage": "https://github.com/leanpanda-com/datocms-plugins/tree/master/send-record-id",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Creates a sidebar button that allows a user to make a POST request to a custom url containing the record id as body.",
   "main": "index.js",
   "scripts": {
