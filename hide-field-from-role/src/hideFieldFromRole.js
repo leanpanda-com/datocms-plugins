@@ -23,7 +23,7 @@ const hideFieldFromRole = (plugin, window) => {
   const dato = new SiteClient(plugin.parameters.global.apiToken)
   dato.roles.find(plugin.currentUser.relationships.role.data.id)
     .then(role => toggleField(role.name, plugin))
-    .catch(e => window.alert(error))
+    .catch(error => window.alert(error))
 }
 
 export default hideFieldFromRole
