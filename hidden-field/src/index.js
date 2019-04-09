@@ -1,4 +1,5 @@
-window.DatoCmsPlugin.init((plugin) => {
-  plugin.startAutoResizer();
-  plugin.toggleField(plugin.fieldPath, false);
-});
+import hideField from './hideField'
+
+window.DatoCmsPlugin.init(plugin => {
+  hideField(plugin)
+})
