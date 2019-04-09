@@ -29,7 +29,7 @@ describe('hideFieldFromRole', () => {
 
     it('hides field', async () => {
       const plugin = mockPluginFactory()
-      hideFieldFromRole(plugin)
+      hideFieldFromRole(plugin, window)
       await flushPromises()
       expect(roles.find).toHaveBeenCalledTimes(1)
       expect(plugin.toggleField).toHaveBeenCalledTimes(1)
@@ -43,7 +43,7 @@ describe('hideFieldFromRole', () => {
 
     it('does not hide field', async () => {
       const plugin = mockPluginFactory()
-      hideFieldFromRole(plugin)
+      hideFieldFromRole(plugin, window)
       await flushPromises()
       expect(roles.find).toHaveBeenCalledTimes(1)
       expect(plugin.toggleField).toHaveBeenCalledTimes(0)

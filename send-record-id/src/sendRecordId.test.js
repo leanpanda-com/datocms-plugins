@@ -57,7 +57,6 @@ describe('sendRecordId', () => {
       expect(button.classList.contains('loading')).toBe(true)
       await flushPromises()
       const statement = document.getElementById('statement')
-      console.log(statement.textContent)
       expect(fetch('invalid.url')).rejects.toEqual({status: 500})
       // expect(statement.textContent).toBe('500');
       expect(button.classList.contains('loading')).toBe(false)

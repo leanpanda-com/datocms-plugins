@@ -18,12 +18,12 @@ const toggleField = (roleName, plugin) => {
   plugin.toggleField(path, false)
 }
 
-const hideFieldFromRole = plugin => {
+const hideFieldFromRole = (plugin, window) => {
   plugin.startAutoResizer()
   const dato = new SiteClient(plugin.parameters.global.apiToken)
   dato.roles.find(plugin.currentUser.relationships.role.data.id)
     .then(role => toggleField(role.name, plugin))
-    .catch(e => console.log(e))
+    .catch(e => window.alert(error))
 }
 
 export default hideFieldFromRole
