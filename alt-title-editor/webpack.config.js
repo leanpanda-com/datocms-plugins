@@ -1,13 +1,16 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackIncludeAssetsPlugin = require(
+  'html-webpack-include-assets-plugin'
+)
+const path = require('path')
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  entry: __dirname + '/src/index.js',
+  entry: path.join(__dirname, 'src/index.js'),
   mode: process.env.NODE_ENV,
   output: {
-    path: __dirname + '/dist',
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   devtool: 'source-map',
@@ -20,21 +23,21 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: __dirname + '/src',
+        include: path.join(__dirname, 'src'),
         loader: 'eslint-loader',
         enforce: 'pre',
       },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        use: { loader: 'babel-loader' }
+        use: {loader: 'babel-loader'}
       },
       {
         test: /\.sass$/,
         use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
+          'style-loader',
+          'css-loader',
+          'sass-loader'
         ]
       },
     ],

@@ -1,5 +1,1 @@
-module.exports = {
-  moduleNameMapper: {
-    "^.+\\.(css|sass)$": "babel-jest"
-  }
-}
+module.exports = {moduleNameMapper: {'^.+\\.(css|sass)$': 'babel-jest'}}
