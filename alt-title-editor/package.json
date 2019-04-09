@@ -1,6 +1,6 @@
 {
   "name": "datocms-plugin-alt-title-editor",
-  "homepage": "https://github.com/leanpanda-com/datocms-plugins/alt-title-editor",
+  "homepage": "https://github.com/leanpanda-com/datocms-plugins/tree/master/alt-title-editor",
   "version": "0.0.1",
   "description": "This plugin allows the editor to speed up editing images' titles and alts in a record. Install it on a JSON field and you will see two inputs, one for alt and one for title. By clicking on 'Apply' it applies the values to all images in the same record. To see the results you should refresh the page. If you have more than one locale you should enable the localization for the field on which the plugin is installed to be able to edit each locale independently.",
   "main": "index.js",

@@ -1,6 +1,6 @@
 {
   "name": "datocms-plugin-bulk-editor",
-  "homepage": "https://github.com/leanpanda-com/datocms-plugins/bulk-editor",
+  "homepage": "https://github.com/leanpanda-com/datocms-plugins/tree/master/bulk-editor",
   "version": "0.0.1",
   "description": "This plugin can be added to all kinds of field belonging to a non-singleton model. It allows you to apply the same field value to all records belonging to the same model by using the content manager API. Something like a 'it's never too late' default value. Remember to refresh the page to see results!",
   "main": "index.js",
