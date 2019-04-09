@@ -1,7 +1,6 @@
 {
   "name": "datocms-plugin-hidden-field",
   "homepage": "https://github.com/leanpanda-com/datocms-plugins/tree/master/hidden-field",
-  "version": "0.0.1",
   "description": "This is the simplest field editor ever! A plugin that allows you to simply hide a field that you don't want anyone to edit or that is taking too much space in your editor view. You can apply this plugin to every field type",
   "main": "index.js",
   "scripts": {
@@ -96,5 +95,6 @@
     "webpack-dev-server": "^3.1.10",
     "yo": "^2.0.5"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "version": "0.0.1"
 }
