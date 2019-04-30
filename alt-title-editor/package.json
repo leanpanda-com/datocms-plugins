@@ -30,7 +30,7 @@
   "author": "Lean Panda <info@leanpanda.com>",
   "license": "ISC",
   "datoCmsPlugin": {
-    "title": "Alt & title quick Editor",
+    "title": "Alt & title Quick Editor",
     "previewImage": "docs/preview.gif",
     "coverImage": "docs/cover.png",
     "entryPoint": "dist/index.html",
