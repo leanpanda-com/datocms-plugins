@@ -53,7 +53,8 @@
       "color",
       "video",
       "lat_lon",
-      "links"
+      "links",
+      "link"
     ],
     "parameters": {
       "global": [],
