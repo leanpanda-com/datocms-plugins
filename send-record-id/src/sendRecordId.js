@@ -1,6 +1,7 @@
 import './style/style.sass'
 import './style/button.sass'
 import fetch from 'fetch-reject'
+import base64 from 'base-64'
 
 const callUrl = (url, headers, body) => {
   const button = document.getElementById('DatoCMS-button--primary')
@@ -32,7 +33,7 @@ const callUrl = (url, headers, body) => {
 const sendRecordId = (plugin, document) => {
   plugin.startAutoResizer()
 
-  const {url, label, hint} = plugin.parameters.instance
+  const {url, label, hint, username, password} = plugin.parameters.instance
 
   const container = document.createElement('div')
   container.id = ('container')
@@ -59,6 +60,12 @@ const sendRecordId = (plugin, document) => {
   button.appendChild(spinner)
   spinner.id = ('spinner')
   container.appendChild(button)
+
+  if (username && password) {
+    const encodedString = base64.encode(`${username}:${password}`)
+    const value = `Basic ${encodedString}`
+    headers.append('Authorization', value)
+  }
 
   button.addEventListener('click', event => {
     if (!event.target.matches('#DatoCMS-button--primary')) return
