@@ -12,7 +12,6 @@ const TESTABLE_PLUGINS = [
 
 const runTests = (path) => {
   const root = process.cwd()
-  console.log('root:', root)
   process.chdir(path)
   execSync('yarn install', {stdio: [0,1,2]})
   let testExitCode = 0
