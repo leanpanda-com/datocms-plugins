@@ -9,3 +9,6 @@ To configure the sidebar button you need to specify the URL,
 define the button's label
 and optionally write a few lines to explain to the content editor
 what the button does.
+
+Optionally provide an username and password that will be sent using 
+basic authentication.
