@@ -1,10 +1,16 @@
 import {SiteClient} from 'datocms-client'
 
-const toggleField = (roleName, plugin) => {
+const toggleField = (role, plugin) => {
   const {roles} = plugin.parameters.instance
-  const hideFromRoles = roles.split(',').map(r => r.toLowerCase())
+  const defaultRoles = plugin.parameters.global.defaultRoles || ''
 
-  if (!hideFromRoles.includes(roleName.toLowerCase())) {
+  const hideFromRoles = roles.split(',').map(r => r.toLowerCase().trim())
+    + defaultRoles.split(',').map(r => r.toLowerCase().trim())
+
+  if (
+    !hideFromRoles.includes(role.name.toLowerCase())
+    && !hideFromRoles.includes(role.id)
+  ) {
     return
   }
 
@@ -18,12 +24,32 @@ const toggleField = (roleName, plugin) => {
   plugin.toggleField(path, false)
 }
 
-const hideFieldFromRole = (plugin, window) => {
+const hideFieldFromRole = async plugin => {
   plugin.startAutoResizer()
+  if (
+    plugin.currentUser.type === 'account'
+    || !plugin.parameters.instance.roles
+  ) {
+    return
+  }
+
+  if (!plugin.parameters.global.apiToken) {
+    console.log(
+      'Please set a valid read-only API token in the plugins settings'
+    )
+    return
+  }
+
   const dato = new SiteClient(plugin.parameters.global.apiToken)
-  dato.roles.find(plugin.currentUser.relationships.role.data.id)
-    .then(role => toggleField(role.name, plugin))
-    .catch(error => window.alert(error))
+  const role = await dato.roles.find(
+    plugin.currentUser.relationships.role.data.id
+  )
+
+  if (role) {
+    toggleField(role, plugin)
+  } else {
+    console.log('Could not find the role')
+  }
 }
 
 export default hideFieldFromRole

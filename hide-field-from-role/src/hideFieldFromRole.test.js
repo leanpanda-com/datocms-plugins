@@ -6,13 +6,13 @@ jest.mock('datocms-client')
 
 const mockPluginFactory = () => ({
   parameters: {
-    global: {api_key: 'ciao'},
-    instance: {roles: 'editor, translator'},
+    global: {apiToken: 'ciao', defaultRoles: 'translator'},
+    instance: {roles: 'editor'}
   },
   startAutoResizer: jest.fn(() => null),
   toggleField: jest.fn(() => null),
   getFieldValue: jest.fn(() => 'value'),
-  currentUser: {relationships: {role: {data: {id: '345'}}}},
+  currentUser: {type: 'user', relationships: {role: {data: {id: '345'}}}},
   field: {attributes: {label: 'title'}},
   fieldPath: 'title'
 })
@@ -45,8 +45,21 @@ describe('hideFieldFromRole', () => {
       const plugin = mockPluginFactory()
       hideFieldFromRole(plugin, window)
       await flushPromises()
-      expect(roles.find).toHaveBeenCalledTimes(1)
       expect(plugin.toggleField).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('if currentUser is on the default list', () => {
+    beforeAll(() => {
+      roles.find = jest.fn(() => Promise.resolve({name: 'translator'}))
+    })
+
+    it('hides field', async () => {
+      const plugin = mockPluginFactory()
+      hideFieldFromRole(plugin, window)
+      await flushPromises()
+      expect(roles.find).toHaveBeenCalledTimes(1)
+      expect(plugin.toggleField).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"yarn dev\" \"yarn localtunnel\"",
-    "localtunnel": "lt -s datocms-plugin-hide-field-from-role --port 5000",
+    "localtunnel": "lt -s datocms-plugin-hide-field-from-role --port 5000 -h http://localtunnel.me",
     "dev": "NODE_ENV=development webpack-dev-server --port 5000",
     "dist": "NODE_ENV=production webpack --progress",
     "prepublishOnly": "rimraf lib dist && mkdir dist && npm run dist",
@@ -63,6 +63,13 @@
           "label": "DatoCMS read-only API token",
           "type": "string",
           "required": true
+        },
+        {
+          "id": "default_roles",
+          "label": "Roles that should not see this field",
+          "type": "string",
+          "required": false,
+          "hint": "These roles (IDs or names) will not be able to see the field wih this plugin installed (comma separated)"
         }
       ],
       "instance": [
@@ -71,7 +78,7 @@
           "label": "Roles that should not see this field",
           "type": "string",
           "required": true,
-          "hint": "These roles will not be able to see this field (comma separated)"
+          "hint": "These roles (IDs or names) will not be able to see this field (comma separated)"
         }
       ]
     }
