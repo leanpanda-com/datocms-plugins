@@ -13,5 +13,12 @@ iframe has loaded, so the field will briefly flash before a
 
 ## Configuration
 
+In the global variables settings insert a full access API token (required)
+and an optional list of default roles that won't see any field with 
+the plugin installed - names or IDs separated by commas.
+
 When applying this plugin to your field,
-please insert the roles names or IDs separated by commas.
+please insert the roles names or IDs separated by commas. 
+
+The hide field rule for the field will be applied to 
+the default roles - if any - and the field specific roles.
