@@ -52,7 +52,10 @@
       "color",
       "video",
       "lat_lon",
-      "links"
+      "links",
+      "link",
+      "seo",
+      "slug"
     ],
     "parameters": {
       "global": [
