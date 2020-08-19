@@ -1,7 +1,7 @@
 {
   "name": "datocms-plugin-chart",
   "homepage": "https://github.com/leanpanda-com/datocms-plugins/tree/master/chart",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Chart from a json field",
   "main": "index.js",
   "scripts": {

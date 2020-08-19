@@ -1,7 +1,7 @@
 {
   "name": "datocms-plugin-cross-site-data",
   "homepage": "https://github.com/",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A plugin that allows copying data from another site",
   "main": "index.js",
   "scripts": {

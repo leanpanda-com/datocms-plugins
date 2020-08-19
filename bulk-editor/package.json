@@ -109,5 +109,5 @@
   "dependencies": {
     "datocms-client": "^0.8.15"
   },
-  "version": "0.1.0"
+  "version": "0.2.0"
 }
