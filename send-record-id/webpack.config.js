@@ -14,7 +14,6 @@ module.exports = {
   devServer: {
     contentBase: './',
     disableHostCheck: true,
-    public: 'https://datocms-plugin-sidebar-button.localtunnel.me',
   },
   module: {
     rules: [
