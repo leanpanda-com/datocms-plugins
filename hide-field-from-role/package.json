@@ -4,8 +4,6 @@
   "description": "This plugin prevent certain roles to see a field",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"yarn dev\" \"yarn localtunnel\"",
-    "localtunnel": "lt -s datocms-plugin-hide-field-from-role --port 5000 -h http://localtunnel.me",
     "dev": "NODE_ENV=development webpack-dev-server --port 5000",
     "dist": "NODE_ENV=production webpack --progress",
     "prepublishOnly": "rimraf lib dist && mkdir dist && npm run dist",
@@ -54,7 +52,10 @@
       "color",
       "video",
       "lat_lon",
-      "links"
+      "links",
+      "link",
+      "seo",
+      "slug"
     ],
     "parameters": {
       "global": [
@@ -108,7 +109,6 @@
     "html-webpack-inline-source-plugin": "^0.0.10",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.7.1",
-    "localtunnel": "^1.9.1",
     "mini-css-extract-plugin": "^0.4.3",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
@@ -120,7 +120,7 @@
     "yo": "^2.0.5"
   },
   "dependencies": {
-    "datocms-client": "^0.8.15"
+    "datocms-client": "^3.0.35"
   },
   "version": "0.0.6"
 }

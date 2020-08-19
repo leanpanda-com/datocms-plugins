@@ -14,7 +14,6 @@ module.exports = {
   devServer: {
     contentBase: './',
     disableHostCheck: true,
-    public: 'https://datocms-plugin-hidden-field.localtunnel.me',
   },
   module: {
     rules: [

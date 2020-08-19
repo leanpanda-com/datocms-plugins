@@ -4,7 +4,6 @@ const TESTABLE_PLUGINS = [
   'alt-title-editor',
   'bulk-editor',
   'chart',
-  'co-working',
   'hidden-field',
   'hide-field-from-role',
   'send-record-id'
